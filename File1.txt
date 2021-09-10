@@ -1,0 +1,3 @@
+untracked files- not a part of repository. They exist locally
+change history will not be recorded. Push command will not work.
+tracked-files that store change history and can be push to remote repo while using push command.
