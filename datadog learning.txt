@@ -1,0 +1,182 @@
+Why monitoring?
+Monitoring is a generic term in the context of operating a business. As part of effectively running a business, various
+elements of the business operations are measured for their health and effectiveness. The outputs of such measurements
+are compared against the business goals. When such efforts are done periodically and systematically, it could be called
+monitoring.
+
+
+
+
+Monitoring terminology and processes
+Host-
+A host used to mean a physical server during the data center era. In the monitoring world, it usually refers to a device with an IP address. That covers a wide variety of equipment and resources – bare-metal machines, network gear, IoT devices, virtual machines, and even containers.
+Some of the first-generation monitoring tools, such as Nagios and Zenoss are built around the concept of a host, meaning everything that can be done on those platforms must be tied to a host. Such restrictions are relaxed in new-generation monitoring tools such as Datadog.
+
+Agent-
+An agent is a service that runs alongside the application software system to help with monitoring. It runs various tasks for the monitoring tools and reports information back to the monitoring backend.
+The agents are installed on the hosts where the application system runs. It could be a simple process running directly on the operating system or a microservice. Datadog supports both options and when the application software is deployed as microservices, the agent is also deployed as a microservice.
+
+Metrics-
+Metrics in monitoring refers to a time-bound measurement of some information that would provide insight into the
+workings of the system being monitored. These are some familiar examples:
+  Disk space available on the root partition of a machine
+  Free memory on a machine
+  Days left until the expiration of an SSL certificate
+The important thing to note here is that a metric is time-bound and its value will change. For that reason, the total disk space on the root partition is not considered a metric.
+A metric is measured periodically to generate time-series data. We will see that this time-series data can be used in various ways – to plot charts on dashboards, to analyze trends, and to set up monitors. 
+
+Up/down status-
+A metric measurement can have a range of values, but up or down is a binary status. These are a few examples:
+  A process is up or down
+  A website is up or down
+  A host is pingable or not
+Tracking the up/down status of various components of a software system is core to all monitoring tools and they have builtin features to check on a variety of resources.
+
+Threshold-
+A threshold is a fixed value in the range of values possible for a metric. For example, on a root partition with a total disk space of 8 GB, the available disk space could be anything from 0 GB to 8 GB. A threshold in this specific case could be 1 GB, which could be set as an indication of low storage on the root partition.
+There could be multiple thresholds defined too. In this specific example, 1 GB could be a warning threshold and 500 MB could be a critical or high-severity threshold.
+
+Monitor-
+A monitor looks at the time-series data generated for a metric and alerts the alert recipients if the values cross the thresholds. A monitor can also be set up for the up/down status, in which case it alerts the alert recipients if the related resource is down.
+
+Severity level-
+Alerts are classified by the seriousness of the issue that they unearth about the software system and that is set by the appropriate severity level. The response to an alert is tied to the severity level of the alert.
+A sample set of severity levels could consist of the levels Informational, Warning, and Critical. For example, with our example of available disk space on the root partition, at 30% of available disk space, the monitor could be configured to alert as a warning and at 20% it could alert as critical.
+
+Downtime-
+The downtime of a monitor is a time window during which alerting is disabled on that monitor. Usually, this is done for a temporary period while some change to the underlying infrastructure or software component is rolled out, during which time monitoring on that component is irrelevant. For example, a monitor that tracks the available space on a disk drive will be impacted while the maintenance task to increase the storage size is ongoing.
+
+
+
+
+Types of monitoring
+There are different types of monitoring.
+1-Infrastructure monitoring-
+The infrastructure that runs the application system is made up of multiple components: servers, storage devices, a load balancer, and so on. Checking the health of these devices is the most basic requirement of monitoring. The popular monitoring platforms support this feature out of the box. Very little customization is required except for setting up the right thresholds on those metrics for alerting.
+
+2-Platform monitoring-
+An application system is usually built using multiple third-party tools such as the following:
+  Databases, both RDBMS (MySQL, Postgres) and NoSQL (MongoDB, Couchbase, Cassandra) data repositories  
+  Full-text search engines (Elasticsearch)
+  Big data platforms (Hadoop, Spark).................etc
+Checking the health of these application components is important too.
+
+3-Application monitoring-
+Having a healthy infrastructure and platform is not good enough for an application to function correctly. Defective code from a recent deployment or third-party component issues or incompatible changes with external systems can cause application failures. Application-level checks can be implemented to detect such issues.
+
+4-Business monitoring-
+You could have an application that runs flawlessly on a healthy infrastructure but still, the business might not be meeting its goals. It is important to provide that feedback to the business at the earliest opportunity to take corrective actions that might trigger enhancements of the application features and/or the way the business is run using the application.
+These efforts should only complement the more complex BI-based data analysis methods that could provide deeper insights into the state of the business. Business-level monitoring can be based on transactional data readily available in the data repositories and the data aggregates generated by BI systems.
+Both application- and business-level monitoring are company-specific, and plugins have to be developed for such
+monitoring requirements. Implementing a framework to access standard sources of information such as databases and
+REST APIs from the monitoring platform could minimize the requirement of building plugins from scratch every time.
+
+5-Last-mile monitoring-
+A monitoring platform deployed in the same public cloud or data center environment as where the applications run cannot check the end user experience.
+For example, if you are keen on knowing how your mobile app performs on iPhones in Chicago, that
+could be tracked using the service provider's testing infrastructure in Chicago.
+
+6-Log aggregation-
+In a production environment, a huge amount of information is logged in various log files, by operating system, platform components, and application. They will get some attention when issues happen and normally are ignored otherwise.
+Traditional monitoring tools such as Nagios couldn't handle the constantly changing log files except for alerting on some patterns.
+The advent of log aggregation tools such as Splunk changed that situation. Using aggregated and indexed logs, it is
+possible to detect issues that would have gone unnoticed earlier. Alerts can be set up based on the info available in the indexed log data.
+
+
+
+Non Core Monitoring Features-----
+
+Security monitoring-
+Security monitoring is a vast area by itself and there are specialized tools available for that, such as SIEM tools. However, that is slowly changing and general-purpose monitoring tools including Datadog have started offering security features to be more competitive in the market. Security monitoring usually covers these aspects:
+   The vulnerability of the application system, including infrastructure, due to changes made to its state
+   The vulnerability of infrastructure components with respect to known issues
+   Monitoring attacks and catching security breaches
+
+Application Performance Monitoring (APM)-
+As the name suggests, APM helps to fine-tune the application's performance. This is made possible by the improved
+observability of the application system in which the interoperability of various components is made more visible. Though these monitoring tools started off as dedicated APM solutions, full-stack monitoring is available these days so they can be used for general-purpose monitoring.   
+
+
+
+
+
+Overview of monitoring tools-
+One challenge a DevOps architect would encounter when planning a monitoring solution is to evaluate the available tools for rolling out a proactive monitoring solution. In that respect, as we will see in this book, Datadog stands out as one of the best general-purpose monitoring tools as it supports the core monitoring features and also provides some non-core features such as security monitoring.
+
+1-On-premises tools-
+	AppDynamics
+	Splunk
+	The ELK Stack
+	Prometheus
+	TICK Stack
+	Zabbix
+	Nagios
+
+2-Cloud-native tools-
+	AWS CloudWatch
+	Google operations
+	Azure Monitor
+
+
+
+
+
+Deploying the Datadog Agent-
+The primary tasks of the monitoring tool are to collect metric values periodically as time
+series data and to alert on issues based on the thresholds set for each metric.
+The common method used by monitoring tools to collect such data is to run an agent process close to where the software application runs, be it on a bare-metal server, virtual machine, or container. This would enable the monitoring agent to collect metric values directly by querying the software application and the infrastructure where it runs.
+Datadog collects such data in various ways and like other monitoring tools, it also provides an agent. The agent gathers monitoring data from the local environment and uploads that to the Datadog SaaS backend in the cloud.
+
+
+
+
+
+Runtime configurations
+There are multiple ways you can deploy the Datadog Agent in runtime environments to collect events and data, and such configurations depend largely on how the applications are deployed.
+
+1-As a service on the host monitoring application processes: In this case, the Datadog Agent service monitors one or
+more application processes or services running on the same host.
+
+2-As a service on the Docker host monitoring application containers: In this case, the software application is
+deployed as containers on the Docker host and the Datadog Agent runs directly on the host, monitoring the health of the containers and the application
+
+3-As a container on the Docker host monitoring application containers: In this configuration, both the Datadog
+Agent and the application are run in containers on the Docker host
+
+In all these three configurations and their variations, the Datadog Agent should be able to connect to the Datadog SaaS backend through the company network and internet, to upload the metrics collected locally. Therefore, configuring the company network firewall to enable the traffic going out from the Datadog Agent is a prerequisite for it to be operational.
+
+
+NOTE-
+Before an agent can be installed, you should sign up for a Datadog account. Datadog allows you to try out most of its features for free for a 2-week trial period. Once you have access to an account, you will get access to an API key for that account. When an agent is installed, the API key has to be specified and that's how the Datadog SaaS backend correlates the agent traffic to a customer account.
+
+
+
+
+
+
+DatadogAgent components-
+1-Collector: As the name suggests, the Collector collects the system metrics every 15 seconds. The collection frequency can be different for other types of metric types and the Datadog documentation provides that information.
+2-Forwarder: The metrics collected locally are sent over HTTPS to the Datadog backend by the Forwarder. To optimize
+the communication, the metrics collected are buffered in memory prior to shipping them to the backend.
+3-DogStatsD: StatsD is a general-purpose metrics collection and aggregation daemon that runs on port 8125 by default. StatsD is a popular interface offered by monitoring tools for integrating with external systems. DogStatsD is an implementation of StatsD by Datadog and it is available as a component of the Datadog Agent. We will see later in this book how StatsD can be used to implement lightweight but very effective integrations.
+
+
+
+
+
+
+The Datadog Dashboard-
+The Datadog dashboard provides an excellent view of that data, and it can
+be accessed using popular web browsers. The administrators use the dashboard to perform a variety of tasks – managing user accounts and their privileges, creating operational dashboards, enabling integrations, and creating monitors are typical examples. The dashboard provides a chat window for the users to contact customer support as well.
+While the dashboard has a large number of features, some of them are more important than others, and we will study them in detail in this chapter. These are the important dashboard features:-
+	Infrastructure List
+	Events
+	Metrics Explorer
+	Dashboards
+	Integrations
+	Monitors
+	Advanced features
+
+Dashboards-
+A Datadog dashboard is a visual tool that can be used to track and analyze metrics. It offers a rich set of features that can be used to build custom dashboards, in addition to the dashboards available out of the box.
+The Dashboards main menu option has two options, Dashboard List and New Dashboard
